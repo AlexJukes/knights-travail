@@ -10,8 +10,10 @@ const node = () => ({
 const generateChessBoard = () => Array.from(Array(BOARD_SIZE), () => new Array(BOARD_SIZE).fill(node()))
 
 const getNextValidKnightMoves = ([x, y], grid) => {
-  const moveSet = [[-1, 2], [-2, 1], [-2, -1], [-1, -2], [1, -2], [2, 0], [2, 1], [1, 2]]
-  return moveSet.map(([diffX, diffY]) => [x + diffX, y + diffY])
+  const moveSet = [[-1, 2], [-2, 1], [-2, -1], [-1, -2], [1, -2], [2, -1], [2, 1], [1, 2]]
+  const [ row ] = grid;
+  const isSquareWithinGrid = ([x, y]) => (x >= 0 && x <= grid.length) && (y >= 0 && y <= row.length)
+  return moveSet.map(([diffX, diffY]) => [x + diffX, y + diffY]).filter((isSquareWithinGrid))
 }
 
 const chessNotationToBoardArrayMap = {
