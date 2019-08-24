@@ -1,0 +1,25 @@
+{
+  "name": "y",
+  "version": "1.0.0",
+  "description": "Code test",
+  "main": "index.js",
+  "devDependencies": {
+    "@babel/core": "^7.5.5",
+    "@babel/register": "^7.5.5",
+    "mocha": "^6.2.0",
+    "chai": "^4.2.0"
+  },
+  "scripts": {
+    "test": "npx mocha --require @babel/register"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlexJukes/knights-travail.git"
+  },
+  "author": "AlexJukes",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AlexJukes/knights-travail/issues"
+  },
+  "homepage": "https://github.com/AlexJukes/knights-travail#readme"
+}
