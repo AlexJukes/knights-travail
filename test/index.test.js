@@ -1,6 +1,6 @@
 require('mocha');
 const { expect} = require('chai');
-const { generateChessBoard, generateNextValidKnightMoves } = require('..');
+const { generateChessBoard, getNextValidKnightMoves } = require('..');
 
 describe("Knight's Travails", () => {
   describe('generateChessBoard', () => {
@@ -18,8 +18,8 @@ describe("Knight's Travails", () => {
   describe('generateNextValidKnightMoves', () => {
     it("given a current position and a grid, will generate and array of possible valid positions", () => {
       const chessBoard = generateChessBoard();
-      const nextMoves = generateNextValidKnightMoves([3,4], chessBoard);
-      expect(nextMoves).to.equal([[2,6], [1,5], [1, 4], [2, 2], [4, 2], [5,4], [5,5], [4,6]]);
+      const nextMoves = getNextValidKnightMoves([3,4], chessBoard);
+      expect(nextMoves).to.deep.equal([[2,6], [1,5], [1, 3], [2, 2], [4, 2], [5,4], [5,5], [4,6]]);
     })
   })
 })

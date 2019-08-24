@@ -9,7 +9,10 @@ const node = () => ({
 
 const generateChessBoard = () => Array.from(Array(BOARD_SIZE), () => new Array(BOARD_SIZE).fill(node()))
 
-const generateNextValidKnightMoves = ([x, y], grid) => []
+const getNextValidKnightMoves = ([x, y], grid) => {
+  const moveSet = [[-1, 2], [-2, 1], [-2, -1], [-1, -2], [1, -2], [2, 0], [2, 1], [1, 2]]
+  return moveSet.map(([diffX, diffY]) => [x + diffX, y + diffY])
+}
 
 const chessNotationToBoardArrayMap = {
     x: {
@@ -27,7 +30,7 @@ const chessNotationToBoardArrayMap = {
       2: 6,
       3: 5,
       4: 4,
-      5: 4,
+      5: 3,
       6: 2,
       7: 1,
       8: 0,
@@ -41,5 +44,5 @@ const getBoardIndexFromNotation = (notation) => {
 
 module.exports = {
   generateChessBoard,
-  generateNextValidKnightMoves,
+  getNextValidKnightMoves,
 }
