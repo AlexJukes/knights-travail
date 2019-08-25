@@ -19,14 +19,14 @@ const chessNotationToBoardArrayMap = {
     7: 1,
     8: 0,
   },
-}
+};
 
 const getBoardIndexFromNotation = (notation) => {
-  const [x, y] = notation
-  return [chessNotationToBoardArrayMap.x[x], chessNotationToBoardArrayMap.y[y] ]
-}
+  const [x, y] = notation;
+  return [chessNotationToBoardArrayMap.x[x], chessNotationToBoardArrayMap.y[y] ];
+};
 
 module.exports = {
   chessNotationToBoardArrayMap,
   getBoardIndexFromNotation,
-}
+};
