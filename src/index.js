@@ -72,7 +72,7 @@ const findBestMoveSet = (start, end) => {
       const { g } = neighbour;
       const gScore = g + 1;
       let isGScoreBest = false;
-      
+
       if(!openList.includes(neighbour)) {
         isGScoreBest = true;
         neighbour.h = heuristic(neighbour.position, end);

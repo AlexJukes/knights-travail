@@ -26,7 +26,21 @@ const getBoardIndexFromNotation = (notation) => {
   return [chessNotationToBoardArrayMap.x[x], chessNotationToBoardArrayMap.y[y] ];
 };
 
+const getNotationFromBoardIndex = ([indexX, indexY]) => {
+  const { keys, entries } = Object;
+  const inverseMap = keys(chessNotationToBoardArrayMap)
+    .reduce((acc, key) => ({
+      ...acc,
+      [key]: {
+        ...entries(chessNotationToBoardArrayMap[key])
+          .reduce((acc, [key,value]) => ({ ...acc, [value]: key }))
+      }
+    }), {});
+  return `${inverseMap.x[indexX].toUpperCase()}${inverseMap.y[indexY]}`;
+};
+
 module.exports = {
   chessNotationToBoardArrayMap,
   getBoardIndexFromNotation,
+  getNotationFromBoardIndex,
 };

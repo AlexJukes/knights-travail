@@ -1,7 +1,8 @@
 /* eslint-disable no-undef */
 require('mocha');
-const { expect} = require('chai');
+const { expect } = require('chai');
 const { generateChessBoard, getNextValidKnightMoves, findBestMoveSet } = require('../src');
+const { getBoardIndexFromNotation, getNotationFromBoardIndex } = require('../src/helpers');
 
 describe('Knight\'s Travails', () => {
   describe('generateChessBoard', () => {
@@ -41,6 +42,18 @@ describe('Knight\'s Travails', () => {
     it('given a current position, and an end position 4 moves away, will return the shortest sequence of final moves', () => {
       const bestMoveSet = findBestMoveSet([0,0], [1,1]);
       expect(bestMoveSet).to.deep.equal([[2,1], [1,3], [3,2], [1,1]]);
+    });
+  });
+  describe('getBoardIndexFromNotation', () => {
+    it('given algebraic chess notation, will convert it into the board index position (x and y)', () => {
+      const notation = getBoardIndexFromNotation('d4');
+      expect(notation).to.deep.equal([3,4]);
+    });
+  });
+  describe('getNotationFromBoardIndex', () => {
+    it('given a board index position (x and y), will convert it into algebraic chess notation', () => {
+      const notation = getNotationFromBoardIndex([3,4]);
+      expect(notation).to.deep.equal('D4');
     });
   });
 });
