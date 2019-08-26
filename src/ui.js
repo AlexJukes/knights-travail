@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 const readline = require('readline');
 const { getBoardIndexFromNotation, getNotationFromBoardIndex } = require('./helpers');
-const { findBestMoveSet } = require('./index');
+const { findBestMoveSet } = require('./logic');
 
 const parseInputForMoves = (input) => {
   const [startInput, endInput] = input.split(' ');

@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 require('mocha');
 const { expect } = require('chai');
-const { generateChessBoard, getNextValidKnightMoves, findBestMoveSet } = require('../src');
+const { generateChessBoard, getNextValidKnightMoves, findBestMoveSet } = require('../src/logic');
 const { getBoardIndexFromNotation, getNotationFromBoardIndex } = require('../src/helpers');
 
 describe('Knight\'s Travails', () => {

@@ -4,7 +4,7 @@ const node = (position) => ({
   f: 0,
   g: 0,
   h: 0,
-  parent: {},
+  parent: null,
   position
 });
 
@@ -12,7 +12,6 @@ const generateChessBoard = () => {
   const grid = Array.from(Array(BOARD_SIZE), () => new Array(BOARD_SIZE).fill([]));
   return grid.map((row, rowIndex) => row.map((_, colIndex) => node([rowIndex, colIndex])));
 };
-
 
 const getNextValidKnightMoves = ([x, y], grid = []) => {
   const moveSet = [[-1, 2], [-2, 1], [-2, -1], [-1, -2], [1, -2], [2, -1], [2, 1], [1, 2]];
@@ -39,9 +38,15 @@ const removeNodeFromList = (node, list) => {
 
 const heuristic = ([startX, startY], [endX, endY]) => {
   const knightsMovementRange = 3;
-  const d1 = Math.abs (endX - startX);
-  const d2 = Math.abs (endY - startY);
+  const d1 = Math.abs(endX - startX);
+  const d2 = Math.abs(endY - startY);
   return (d1 + d2) / knightsMovementRange;
+};
+
+const getMoveHistory = (node, history = []) => {
+  const { position, parent } = node;
+  const result = [position, ...history];
+  return parent ? getMoveHistory(parent, result) : result;
 };
 
 const findBestMoveSet = (start, end) => {
@@ -53,37 +58,35 @@ const findBestMoveSet = (start, end) => {
     const fList = openList.map(({f}) => f);
     const lowestFIndex = fList.indexOf(Math.min(...fList));
     let currentNode = openList[lowestFIndex];
-    if (currentNode.position[0] == end[0] && currentNode.position[1] === end[1]) {
-      let curr = currentNode;
-      let result = [];
-      while(curr.parent) {
-        result.push(curr),
-        curr = curr.parent;
-      }
-      return result.map(({position}) => position).reverse();
+    const [endX, endY] = end;
+
+    const isTargetSquare = ({ position: [x, y]}) => x === endX && y === endY;
+    if (isTargetSquare(currentNode)) {
+      return getMoveHistory(currentNode);
     }
+
     openList = removeNodeFromList(currentNode, openList);
     closedList.push(currentNode);
-    const neighbours = getNextMoveNodes(currentNode.position, grid);
-    for (const neighbour of neighbours) {
-      if (closedList.includes(neighbour)) {
+    const nextMoveNodes = getNextMoveNodes(currentNode.position, grid);
+    for (const nextMoveNode of nextMoveNodes) {
+      if (closedList.includes(nextMoveNode)) {
         continue;
       }
-      const { g } = neighbour;
+      const { g } = nextMoveNode;
       const gScore = g + 1;
       let isGScoreBest = false;
 
-      if(!openList.includes(neighbour)) {
+      if(!openList.includes(nextMoveNode)) {
         isGScoreBest = true;
-        neighbour.h = heuristic(neighbour.position, end);
-        openList.push(neighbour);
-      } else if (gScore < neighbour.g) {
+        nextMoveNode.h = heuristic(nextMoveNode.position, end);
+        openList.push(nextMoveNode);
+      } else if (gScore < nextMoveNode.g) {
         isGScoreBest = true;
       }
       if (isGScoreBest) {
-        neighbour.parent = currentNode;
-        neighbour.g = gScore;
-        neighbour.f = neighbour.g + neighbour.h;
+        nextMoveNode.parent = currentNode;
+        nextMoveNode.g = gScore;
+        nextMoveNode.f = nextMoveNode.g + nextMoveNode.h;
       }
     }
   }
